@@ -1,0 +1,69 @@
+/* Basic Reset & Body Styles */
+body {
+    font-family: Arial, sans-serif; /* Choose a clean, readable font */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Dark gray text color */
+}
+
+/* Header Styles */
+header {
+    background-color: #333; /* Dark background for the header */
+    color: #fff; /* White text */
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Main Content Area */
+main {
+    max-width: 800px; /* Limit content width for readability */
+    margin: 2rem auto; /* Center the content with some top/bottom margin */
+    padding: 20px;
+    background-color: #fff; /* White background for main content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; /* Slightly rounded corners */
+}
+
+/* Section Styles */
+section {
+    margin-bottom: 2rem; /* Space between sections */
+}
+
+section h2 {
+    color: #007bff; /* A nice blue for headings */
+    border-bottom: 2px solid #eee; /* Underline for headings */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Link Styles */
+a {
+    color: #007bff; /* Blue for links */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #333;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
