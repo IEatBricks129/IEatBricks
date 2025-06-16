@@ -1,29 +1,59 @@
+/* Calico Cat Color Palette Variables */
+:root {
+    --calico-white: #f5f5f5;      /* Soft white/cream for backgrounds */
+    --calico-cream: #eeebe8;      /* Slightly darker cream */
+    --calico-orange: #e09e4a;     /* Warm, desaturated orange/ginger */
+    --calico-dark-orange: #c7863d;/* Darker orange for hover/accents */
+    --calico-black: #3a322e;      /* Deep, soft black/brown for text/headers */
+    --calico-darker-black: #2a2522; /* Even darker for footer/header bg */
+    --calico-accent-blue: #70929c; /* A subtle, cool blue for links/highlights */
+    --calico-light-grey: #d1d1d1; /* For borders/lines */
+}
+
+
 /* General Body & Typography */
 body {
-    font-family: 'Roboto', Arial, sans-serif; /* Using a common sans-serif or Google Font */
+    font-family: 'Roboto', Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f0f2f5; /* Lighter background */
-    color: #333;
-    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    color: var(--calico-black); /* Default text color */
+    scroll-behavior: smooth;
+
+    background-image: url('images/calico-pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
+    animation: diagonalScroll 30s linear infinite;
+    position: relative; /* Crucial for z-index context */
+    z-index: 0; /* Base layer */
 }
+
+/* Keyframes for the diagonal background animation */
+@keyframes diagonalScroll {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
 
 /* Base Headings */
 h1, h2, h3 {
-    color: #2c3e50; /* Darker heading color */
+    color: var(--calico-darker-black);
     margin-bottom: 1rem;
 }
 
 h1 {
-    font-family: 'Montserrat', sans-serif; /* Different font for main title */
+    font-family: 'Montserrat', sans-serif;
     font-size: 3rem;
     margin-top: 0.5rem;
 }
 
 h2 {
     font-size: 2rem;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid var(--calico-light-grey);
     padding-bottom: 0.5rem;
 }
 
@@ -33,117 +63,214 @@ h3 {
 
 /* Links */
 a {
-    color: #007bff;
+    color: var(--calico-accent-blue);
     text-decoration: none;
-    transition: color 0.3s ease; /* Smooth color transition on hover */
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #0056b3;
+    color: var(--calico-darker-black);
     text-decoration: underline;
 }
 
-/* Buttons */
+/* Buttons (General) */
 .button {
     display: inline-block;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--calico-orange);
+    color: var(--calico-black);
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin-top: 1rem;
+    font-weight: bold;
 }
 
 .button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Slight lift effect */
-    text-decoration: none; /* Remove underline on button hover */
+    background-color: var(--calico-dark-orange);
+    transform: translateY(-2px);
+    text-decoration: none;
 }
 
 /* Header & Navigation */
 header {
-    background-color: #2c3e50; /* Dark blue/gray header */
-    color: #fff;
-    padding: 1.5rem 0;
+    background-color: transparent; /* No background color on header directly */
+    color: var(--calico-cream);
+    padding: 0; /* Remove header padding as .header-content will handle it */
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* UPDATED: Style for the header's main background area */
 .header-content {
     max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
+    margin: 20px auto 0; /* Add top margin to separate from browser edge */
+    padding: 20px; /* Overall padding for content inside */
+
+    /* This will be the element with calico2.png */
+    background-image: url('images/calico2.png');
+    background-repeat: repeat;
+    background-size: auto;
+    background-color: rgba(42, 37, 34, 0.9); /* Fallback/tint for calico2.png at 90% opacity */
+    animation: diagonalScrollReverse 25s linear infinite reverse; /* Its own animation */
+
+    /* UPDATED: Rounded top and bottom corners */
+    border-top-left-radius: 20px; /* Added top rounding */
+    border-top-right-radius: 20px; /* Added top rounding */
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: hidden; /* Ensures content/shadow respects border-radius */
+    position: relative; /* Establishes new stacking context */
+    z-index: 5; /* Sits above body background, below nav visually */
+
+    /* NEW: Flexbox for internal layout of header elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically if there's extra space */
+}
+
+/* New keyframes for header's background animation (if not already defined) */
+@keyframes diagonalScrollReverse {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: -100% -100%;
+    }
 }
 
 .profile-pic {
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
-    border: 4px solid #fff; /* White border around the picture */
-    margin-bottom: 1rem;
-    display: block; /* Centers the image */
-    margin-left: auto;
-    margin-right: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--calico-cream);
+    margin-bottom: 1.5rem; /* Increased space below picture */
+    display: block;
 }
+
+/* NEW: Styling for the header text box */
+.header-text-box {
+    background-color: rgba(238, 235, 232, 0.8); /* calico-cream at 80% opacity */
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 2rem; /* Increased space below text box */
+    max-width: 600px; /* Limit width for better readability */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    text-align: center; /* Ensure text inside is centered */
+    width: 100%; /* Allow it to take up available width */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
 
 .tagline {
     font-size: 1.3rem;
-    color: #ecf0f1; /* Lighter color for tagline */
-    margin-bottom: 1.5rem;
+    color: var(--calico-orange);
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
+/* UPDATED: Nav for positioning - removed negative margin */
+nav {
+    position: relative;
+    z-index: 6; /* Ensure nav is above .header-content background */
+    margin-top: 0; /* Remove negative margin to prevent overlap */
+    padding-top: 1rem; /* Add padding to separate from content above */
+    padding-bottom: 1rem; /* Add padding below nav for visual spacing */
+    width: 100%; /* Ensure nav takes full width within header-content */
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; /* Use flexbox for horizontal navigation */
+    display: flex;
     justify-content: center;
-    gap: 20px; /* Space between nav items */
-    flex-wrap: wrap; /* Allow nav items to wrap on smaller screens */
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
+/* UPDATED: Navigation Button Styling to show body background */
 nav ul li a {
-    color: #fff;
+    color: var(--calico-cream);
     font-weight: bold;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+
+    /* Background color for the buttons themselves, 90% opacity */
+    background-color: rgba(112, 146, 156, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    /* The magic: This button inherits transparency from its parent (nav),
+       and because the 'header' is transparent, the 'body' background shows through.
+       This is why z-index on nav and body are important. */
 }
 
 nav ul li a:hover {
-    background-color: #007bff;
+    background-color: rgba(42, 37, 34, 0.9); /* Darker on hover (var(--calico-darker-black)) at 90% opacity */
+    color: var(--calico-white);
+    transform: translateY(-2px);
     text-decoration: none;
 }
 
+/* Navigation Click Animation Styles */
+.nav-link-animated {
+    display: inline-block;
+}
+
+@keyframes pulseEffect {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+        color: var(--calico-white);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.is-animating {
+    animation: pulseEffect 0.3s ease-out;
+}
+
+
 /* Main Content Area */
 main {
-    max-width: 900px; /* Increased max-width */
-    margin: 2.5rem auto; /* More margin */
+    max-width: 900px;
+    margin: 2.5rem auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: rgba(245, 245, 245, 0.8); /* --calico-white at 80% opacity */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
+    position: relative;
+    z-index: 5; /* Ensure main content is above body background */
 }
 
 section {
-    margin-bottom: 3rem; /* More space between sections */
-    padding-top: 1rem; /* Padding for smooth scrolling to anchor links */
+    margin-bottom: 3rem;
+    padding-top: 1rem;
 }
 
 /* Skills Section */
 .skills-grid {
-    display: grid; /* Use CSS Grid for skill categories */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Two columns, responsive */
-    gap: 30px; /* Space between grid items */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
 }
 
 .skill-category {
-    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
 }
 
 .skill-category ul {
@@ -152,39 +279,39 @@ section {
 }
 
 .skill-category ul li {
-    background-color: #e9ecef;
+    background-color: var(--calico-light-grey);
     margin-bottom: 8px;
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 0.95rem;
-    color: #555;
+    color: var(--calico-black);
 }
 
 /* Projects Section */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for projects */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
 .project-item {
-    background-color: #f9f9f9;
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    display: flex; /* Flexbox for internal alignment */
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
 }
 
 .project-item h3 {
-    color: #007bff;
+    color: var(--calico-accent-blue);
     margin-top: 0;
 }
 
 .project-item p {
-    flex-grow: 1; /* Allows paragraph to take available space */
+    flex-grow: 1;
     margin-bottom: 1.5rem;
 }
 
@@ -193,8 +320,8 @@ section {
     list-style: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap; /* Allows links to wrap */
-    justify-content: center; /* Center social links */
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
@@ -210,12 +337,12 @@ section {
     align-items: center;
     gap: 8px;
     font-size: 1.1rem;
-    color: #333;
+    color: var(--calico-black);
     font-weight: 500;
 }
 
 .social-links li a:hover {
-    color: #007bff;
+    color: var(--calico-orange);
     text-decoration: none;
 }
 
@@ -233,22 +360,24 @@ section {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
-    color: #555;
+    color: var(--calico-darker-black);
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
-    width: calc(100% - 20px); /* Account for padding */
+    width: calc(100% - 20px);
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--calico-light-grey);
     border-radius: 5px;
     font-size: 1rem;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
+    background-color: rgba(245, 245, 245, 0.8); /* --calico-white at 80% opacity */
+    color: var(--calico-black);
 }
 
 .contact-form textarea {
-    resize: vertical; /* Allow vertical resizing */
+    resize: vertical;
 }
 
 .contact-form button {
@@ -256,12 +385,18 @@ section {
     padding: 12px 30px;
     font-size: 1.1rem;
     cursor: pointer;
-    border: none; /* Remove default button border */
+    border: none;
+    background-color: var(--calico-orange);
+    color: var(--calico-black);
+}
+
+.contact-form button:hover {
+    background-color: var(--calico-dark-orange);
 }
 
 .form-note {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--calico-black);
     margin-top: 1rem;
     text-align: center;
 }
@@ -270,90 +405,33 @@ section {
 footer {
     text-align: center;
     padding: 1.5rem 0;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: var(--calico-darker-black);
+    color: var(--calico-cream);
     font-size: 0.9rem;
     margin-top: 3rem;
 }
 
 /* Responsive Design (Media Queries) */
-
-/* For screens smaller than 768px (e.g., tablets in portrait, large phones) */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    h2 {
-        font-size: 1.7rem;
-    }
-
-    .tagline {
-        font-size: 1.1rem;
-    }
-
-    nav ul {
-        flex-direction: column; /* Stack nav items vertically on smaller screens */
-        gap: 10px;
-        margin-top: 1rem;
-    }
-
-    nav ul li a {
-        padding: 0.8rem 1.5rem;
-        display: block; /* Make links take full width */
-    }
-
-    main {
-        margin: 1.5rem auto;
-        padding: 15px;
-    }
-
-    .skills-grid, .project-grid {
-        grid-template-columns: 1fr; /* Single column layout for small screens */
-    }
-
-    .social-links {
-        flex-direction: column; /* Stack social links vertically */
-        gap: 15px;
-    }
-
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.7rem; }
+    .tagline { font-size: 1.1rem; }
+    nav ul { flex-direction: column; gap: 10px; margin-top: 1rem; }
+    nav ul li a { padding: 0.8rem 1.5rem; display: block; }
+    main { margin: 1.5rem auto; padding: 15px; }
+    .skills-grid, .project-grid { grid-template-columns: 1fr; }
+    .social-links { flex-direction: column; gap: 15px; }
     .contact-form input[type="text"],
     .contact-form input[type="email"],
-    .contact-form textarea {
-        width: 100%; /* Full width for form inputs */
-    }
+    .contact-form textarea { width: 100%; }
 }
 
-/* For even smaller screens (e.g., mobile phones) */
 @media (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    .tagline {
-        font-size: 1rem;
-    }
-
-    .profile-pic {
-        width: 120px;
-        height: 120px;
-    }
-
-    main {
-        margin: 1rem auto;
-        padding: 10px;
-    }
-
-    header {
-        padding: 1rem 0;
-    }
-
-    .button {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
-    }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .tagline { font-size: 1rem; }
+    .profile-pic { width: 120px; height: 120px; }
+    main { margin: 1rem auto; padding: 10px; }
+    header { padding: 1rem 0; }
+    .button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
 }
