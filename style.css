@@ -10,9 +10,9 @@
     --calico-light-grey: #d1d1d1; /* For borders/lines */
 
     /* Custom properties for background animation duration and direction */
-    --body-animation-duration: 30s;
+    --body-animation-duration: 240s; /* Main body background remains very slow and consistent */
     --body-animation-direction: normal;
-    --header-animation-duration: 25s;
+    --header-animation-duration: 50s; /* Header background (calico2) speed */
     --header-animation-direction: reverse;
 }
 
@@ -26,6 +26,10 @@ body {
     color: var(--calico-black); /* Default text color */
     scroll-behavior: smooth;
 
+    /* Ensure long words break to prevent horizontal overflow */
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+
     /* IMPORTANT: 'images/calico-pattern.png' is relative to style.css.
        Ensure style.css is in the root, and 'images' folder is also in the root. */
     background-image: url('images/calico-pattern.png');
@@ -34,6 +38,9 @@ body {
     animation: diagonalScroll var(--body-animation-duration) linear infinite var(--body-animation-direction);
     position: relative; /* Crucial for z-index context */
     z-index: 0; /* Base layer */
+
+    /* *** NEW: This makes the background animation independent of page scroll *** */
+    background-attachment: fixed; 
 }
 
 /* Keyframes for the diagonal background animation */
@@ -120,7 +127,6 @@ header {
     background-image: url('images/calico2.png');
     background-repeat: repeat;
     background-size: auto;
-    background-color: rgba(42, 37, 34, 0.9); /* Fallback/tint for calico2.png at 90% opacity */
     animation: diagonalScrollReverse var(--header-animation-duration) linear infinite var(--header-animation-direction); /* Its own animation */
 
     /* UPDATED: Rounded top and bottom corners */
@@ -287,6 +293,9 @@ blockquote {
     font-style: italic;
     color: var(--calico-black);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    overflow-x: auto; /* Ensures blockquotes handle overflow on small screens */
+    white-space: pre-wrap; /* Ensures pre-formatted text wraps if possible */
+    word-break: break-word; /* Breaks words if necessary */
 }
 
 blockquote p {
