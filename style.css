@@ -10,9 +10,9 @@
     --calico-light-grey: #d1d1d1; /* For borders/lines */
 
     /* Custom properties for background animation duration and direction */
-    --body-animation-duration: 240s; /* Main body background remains very slow and consistent */
+    --body-animation-duration: 10s; /* Main body background remains very slow and consistent */
     --body-animation-direction: normal;
-    --header-animation-duration: 50s; /* Header background (calico2) speed */
+    --header-animation-duration: 10s; /* Header background (calico2) speed */
     --header-animation-direction: reverse;
 }
 
