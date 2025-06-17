@@ -8,6 +8,12 @@
     --calico-darker-black: #2a2522; /* Even darker for footer/header bg */
     --calico-accent-blue: #70929c; /* A subtle, cool blue for links/highlights */
     --calico-light-grey: #d1d1d1; /* For borders/lines */
+
+    /* Custom properties for background animation duration and direction */
+    --body-animation-duration: 30s;
+    --body-animation-direction: normal;
+    --header-animation-duration: 25s;
+    --header-animation-direction: reverse;
 }
 
 
@@ -20,10 +26,12 @@ body {
     color: var(--calico-black); /* Default text color */
     scroll-behavior: smooth;
 
+    /* IMPORTANT: 'images/calico-pattern.png' is relative to style.css.
+       Ensure style.css is in the root, and 'images' folder is also in the root. */
     background-image: url('images/calico-pattern.png');
     background-repeat: repeat;
     background-size: auto;
-    animation: diagonalScroll 30s linear infinite;
+    animation: diagonalScroll var(--body-animation-duration) linear infinite var(--body-animation-direction);
     position: relative; /* Crucial for z-index context */
     z-index: 0; /* Base layer */
 }
@@ -107,12 +115,13 @@ header {
     margin: 20px auto 0; /* Add top margin to separate from browser edge */
     padding: 20px; /* Overall padding for content inside */
 
-    /* This will be the element with calico2.png */
+    /* IMPORTANT: 'images/calico2.png' is relative to style.css.
+       Ensure style.css is in the root, and 'images' folder is also in the root. */
     background-image: url('images/calico2.png');
     background-repeat: repeat;
     background-size: auto;
     background-color: rgba(42, 37, 34, 0.9); /* Fallback/tint for calico2.png at 90% opacity */
-    animation: diagonalScrollReverse 25s linear infinite reverse; /* Its own animation */
+    animation: diagonalScrollReverse var(--header-animation-duration) linear infinite var(--header-animation-direction); /* Its own animation */
 
     /* UPDATED: Rounded top and bottom corners */
     border-top-left-radius: 20px; /* Added top rounding */
@@ -258,6 +267,32 @@ section {
     margin-bottom: 3rem;
     padding-top: 1rem;
 }
+
+/* Specific style for the introductory paragraph on essay pages */
+.intro-paragraph {
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: var(--calico-darker-black);
+}
+
+/* Blockquote for quotes */
+blockquote {
+    background-color: rgba(238, 235, 232, 0.8); /* calico-cream at 80% opacity */
+    border-left: 5px solid var(--calico-orange);
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    font-style: italic;
+    color: var(--calico-black);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+blockquote p {
+    margin: 0; /* Remove default paragraph margin inside blockquote */
+}
+
 
 /* Skills Section */
 .skills-grid {
@@ -411,6 +446,139 @@ footer {
     margin-top: 3rem;
 }
 
+/* --- Additional Styles for Essays & PC Builds Pages --- */
+
+.page-content {
+    padding: 20px;
+}
+
+/* Specific styling for essay articles */
+.essay-article {
+    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.essay-article h3 {
+    color: var(--calico-darker-black);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--calico-light-grey);
+    padding-bottom: 0.5rem;
+}
+
+.essay-article p {
+    margin-bottom: 1rem;
+}
+
+.essay-article .read-more-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* Specific styling for PC build items */
+.pc-build-item {
+    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center;
+}
+
+.pc-build-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--calico-light-grey);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pc-build-item h3 {
+    color: var(--calico-darker-black);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.pc-build-item ul {
+    list-style: none;
+    padding: 0;
+    text-align: left; /* Align list items to the left within the centered box */
+    width: 100%;
+    max-width: 400px; /* Limit width for readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pc-build-item ul li {
+    background-color: var(--calico-light-grey);
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--calico-black);
+}
+
+/* Table Specific Styles (Added/Confirmed) */
+.table-container {
+    overflow-x: auto; /* Ensures table is scrollable on small screens */
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Collapses borders into a single border */
+    margin: 1.5rem 0; /* Space above and below the table */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--calico-black);
+    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply */
+}
+
+table th,
+table td {
+    padding: 12px 15px; /* Padding inside cells */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid var(--calico-light-grey); /* Bottom border for rows */
+}
+
+table th {
+    background-color: var(--calico-orange); /* Header background color */
+    color: var(--calico-black);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: rgba(238, 235, 232, 0.7); /* Slightly lighter for odd rows */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: rgba(238, 235, 232, 0.9); /* Slightly darker for even rows */
+}
+
+table tbody tr:hover {
+    background-color: var(--calico-dark-orange); /* Highlight on hover */
+    color: var(--calico-white);
+}
+
+/* Specific styling for tables within the page-content */
+.page-content table {
+    /* Ensures tables inside main content get these base styles */
+}
+
 /* Responsive Design (Media Queries) */
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
@@ -424,6 +592,14 @@ footer {
     .contact-form input[type="text"],
     .contact-form input[type="email"],
     .contact-form textarea { width: 100%; }
+
+    .page-content {
+        padding: 15px;
+    }
+
+    .essay-article, .pc-build-item {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 480px) {
