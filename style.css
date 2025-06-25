@@ -1,49 +1,36 @@
-/* Calico Cat Color Palette Variables */
 :root {
-    --calico-white: #f5f5f5;      /* Soft white/cream for backgrounds */
-    --calico-cream: #eeebe8;      /* Slightly darker cream */
-    --calico-orange: #e09e4a;     /* Warm, desaturated orange/ginger */
-    --calico-dark-orange: #c7863d;/* Darker orange for hover/accents */
-    --calico-black: #3a322e;      /* Deep, soft black/brown for text/headers */
-    --calico-darker-black: #2a2522; /* Even darker for footer/header bg */
-    --calico-accent-blue: #70929c; /* A subtle, cool blue for links/highlights */
-    --calico-light-grey: #d1d1d1; /* For borders/lines */
-
-    /* Custom properties for background animation duration and direction */
-    --body-animation-duration: 10s; /* Main body background remains very slow and consistent */
+    --calico-white: #f5f5f5;
+    --calico-cream: #eeebe8;
+    --calico-orange: #e09e4a;
+    --calico-dark-orange: #c7863d;
+    --calico-black: #3a322e;
+    --calico-darker-black: #2a2522;
+    --calico-accent-blue: #70929c;
+    --calico-light-grey: #d1d1d1;
+    --body-animation-duration: 10s;
     --body-animation-direction: normal;
-    --header-animation-duration: 10s; /* Header background (calico2) speed */
+    --header-animation-duration: 10s;
     --header-animation-direction: reverse;
 }
 
-
-/* General Body & Typography */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    color: var(--calico-black); /* Default text color */
+    color: var(--calico-black);
     scroll-behavior: smooth;
-
-    /* Ensure long words break to prevent horizontal overflow */
-    word-wrap: break-word; 
+    word-wrap: break-word;
     overflow-wrap: break-word;
-
-    /* IMPORTANT: 'images/calico-pattern.png' is relative to style.css.
-       Ensure style.css is in the root, and 'images' folder is also in the root. */
     background-image: url('images/calico-pattern.png');
     background-repeat: repeat;
     background-size: auto;
     animation: diagonalScroll var(--body-animation-duration) linear infinite var(--body-animation-direction);
-    position: relative; /* Crucial for z-index context */
-    z-index: 0; /* Base layer */
-
-    /* *** NEW: This makes the background animation independent of page scroll *** */
-    background-attachment: fixed; 
+    position: relative;
+    z-index: 0;
+    background-attachment: fixed;
 }
 
-/* Keyframes for the diagonal background animation */
 @keyframes diagonalScroll {
     0% {
         background-position: 0% 0%;
@@ -53,8 +40,6 @@ body {
     }
 }
 
-
-/* Base Headings */
 h1, h2, h3 {
     color: var(--calico-darker-black);
     margin-bottom: 1rem;
@@ -76,7 +61,6 @@ h3 {
     font-size: 1.5rem;
 }
 
-/* Links */
 a {
     color: var(--calico-accent-blue);
     text-decoration: none;
@@ -88,7 +72,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Buttons (General) */
 .button {
     display: inline-block;
     background-color: var(--calico-orange);
@@ -107,45 +90,35 @@ a:hover {
     text-decoration: none;
 }
 
-/* Header & Navigation */
 header {
-    background-color: transparent; /* No background color on header directly */
+    background-color: transparent;
     color: var(--calico-cream);
-    padding: 0; /* Remove header padding as .header-content will handle it */
+    padding: 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* UPDATED: Style for the header's main background area */
 .header-content {
     max-width: 900px;
-    margin: 20px auto 0; /* Add top margin to separate from browser edge */
-    padding: 20px; /* Overall padding for content inside */
-
-    /* IMPORTANT: 'images/calico2.png' is relative to style.css.
-       Ensure style.css is in the root, and 'images' folder is also in the root. */
+    margin: 20px auto 0;
+    padding: 20px;
     background-image: url('images/calico2.png');
     background-repeat: repeat;
     background-size: auto;
-    animation: diagonalScrollReverse var(--header-animation-duration) linear infinite var(--header-animation-direction); /* Its own animation */
-
-    /* UPDATED: Rounded top and bottom corners */
-    border-top-left-radius: 20px; /* Added top rounding */
-    border-top-right-radius: 20px; /* Added top rounding */
+    animation: diagonalScrollReverse var(--header-animation-duration) linear infinite var(--header-animation-direction);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    overflow: hidden; /* Ensures content/shadow respects border-radius */
-    position: relative; /* Establishes new stacking context */
-    z-index: 5; /* Sits above body background, below nav visually */
-
-    /* NEW: Flexbox for internal layout of header elements */
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically if there's extra space */
+    align-items: center;
+    justify-content: center;
 }
 
-/* New keyframes for header's background animation (if not already defined) */
 @keyframes diagonalScrollReverse {
     0% {
         background-position: 0% 0%;
@@ -161,23 +134,21 @@ header {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--calico-cream);
-    margin-bottom: 1.5rem; /* Increased space below picture */
+    margin-bottom: 1.5rem;
     display: block;
 }
 
-/* NEW: Styling for the header text box */
 .header-text-box {
-    background-color: rgba(238, 235, 232, 0.8); /* calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
     padding: 15px 20px;
     border-radius: 10px;
-    margin-bottom: 2rem; /* Increased space below text box */
-    max-width: 600px; /* Limit width for better readability */
+    margin-bottom: 2rem;
+    max-width: 600px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    text-align: center; /* Ensure text inside is centered */
-    width: 100%; /* Allow it to take up available width */
-    box-sizing: border-box; /* Include padding in width calculation */
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
-
 
 .tagline {
     font-size: 1.3rem;
@@ -186,14 +157,13 @@ header {
     margin-top: 0.5rem;
 }
 
-/* UPDATED: Nav for positioning - removed negative margin */
 nav {
     position: relative;
-    z-index: 6; /* Ensure nav is above .header-content background */
-    margin-top: 0; /* Remove negative margin to prevent overlap */
-    padding-top: 1rem; /* Add padding to separate from content above */
-    padding-bottom: 1rem; /* Add padding below nav for visual spacing */
-    width: 100%; /* Ensure nav takes full width within header-content */
+    z-index: 6;
+    margin-top: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
 }
 
 nav ul {
@@ -206,7 +176,6 @@ nav ul {
     flex-wrap: wrap;
 }
 
-/* UPDATED: Navigation Button Styling to show body background */
 nav ul li a {
     color: var(--calico-cream);
     font-weight: bold;
@@ -214,24 +183,18 @@ nav ul li a {
     border-radius: 8px;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-
-    /* Background color for the buttons themselves, 90% opacity */
     background-color: rgba(112, 146, 156, 0.9);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: inline-block;
-    /* The magic: This button inherits transparency from its parent (nav),
-       and because the 'header' is transparent, the 'body' background shows through.
-       This is why z-index on nav and body are important. */
 }
 
 nav ul li a:hover {
-    background-color: rgba(42, 37, 34, 0.9); /* Darker on hover (var(--calico-darker-black)) at 90% opacity */
+    background-color: rgba(42, 37, 34, 0.9);
     color: var(--calico-white);
     transform: translateY(-2px);
     text-decoration: none;
 }
 
-/* Navigation Click Animation Styles */
 .nav-link-animated {
     display: inline-block;
 }
@@ -256,17 +219,15 @@ nav ul li a:hover {
     animation: pulseEffect 0.3s ease-out;
 }
 
-
-/* Main Content Area */
 main {
     max-width: 900px;
     margin: 2.5rem auto;
     padding: 20px;
-    background-color: rgba(245, 245, 245, 0.8); /* --calico-white at 80% opacity */
+    background-color: rgba(245, 245, 245, 0.8);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     position: relative;
-    z-index: 5; /* Ensure main content is above body background */
+    z-index: 5;
 }
 
 section {
@@ -274,7 +235,6 @@ section {
     padding-top: 1rem;
 }
 
-/* Specific style for the introductory paragraph on essay pages */
 .intro-paragraph {
     font-size: 1.15rem;
     font-weight: 500;
@@ -283,9 +243,8 @@ section {
     color: var(--calico-darker-black);
 }
 
-/* Blockquote for quotes */
 blockquote {
-    background-color: rgba(238, 235, 232, 0.8); /* calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
     border-left: 5px solid var(--calico-orange);
     margin: 1.5rem 0;
     padding: 1rem 1.5rem;
@@ -293,17 +252,15 @@ blockquote {
     font-style: italic;
     color: var(--calico-black);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    overflow-x: auto; /* Ensures blockquotes handle overflow on small screens */
-    white-space: pre-wrap; /* Ensures pre-formatted text wraps if possible */
-    word-break: break-word; /* Breaks words if necessary */
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 blockquote p {
-    margin: 0; /* Remove default paragraph margin inside blockquote */
+    margin: 0;
 }
 
-
-/* Skills Section */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -314,7 +271,7 @@ blockquote p {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
 }
 
 .skill-category ul {
@@ -331,7 +288,6 @@ blockquote p {
     color: var(--calico-black);
 }
 
-/* Projects Section */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -346,7 +302,7 @@ blockquote p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
 }
 
 .project-item h3 {
@@ -359,7 +315,6 @@ blockquote p {
     margin-bottom: 1.5rem;
 }
 
-/* Contact Section */
 .social-links {
     list-style: none;
     padding: 0;
@@ -416,7 +371,7 @@ blockquote p {
     border-radius: 5px;
     font-size: 1rem;
     box-sizing: border-box;
-    background-color: rgba(245, 245, 245, 0.8); /* --calico-white at 80% opacity */
+    background-color: rgba(245, 245, 245, 0.8);
     color: var(--calico-black);
 }
 
@@ -445,7 +400,6 @@ blockquote p {
     text-align: center;
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 1.5rem 0;
@@ -455,15 +409,12 @@ footer {
     margin-top: 3rem;
 }
 
-/* --- Additional Styles for Essays & PC Builds Pages --- */
-
 .page-content {
     padding: 20px;
 }
 
-/* Specific styling for essay articles */
 .essay-article {
-    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
     padding: 25px;
     border-radius: 10px;
     margin-bottom: 2.5rem;
@@ -488,16 +439,15 @@ footer {
     font-weight: bold;
 }
 
-/* Specific styling for PC build items */
 .pc-build-item {
-    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
     padding: 25px;
     border-radius: 10px;
     margin-bottom: 2.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Stack image and text vertically */
-    align-items: center; /* Center content horizontally */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
@@ -519,9 +469,9 @@ footer {
 .pc-build-item ul {
     list-style: none;
     padding: 0;
-    text-align: left; /* Align list items to the left within the centered box */
+    text-align: left;
     width: 100%;
-    max-width: 400px; /* Limit width for readability */
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -535,9 +485,8 @@ footer {
     color: var(--calico-black);
 }
 
-/* Table Specific Styles (Added/Confirmed) */
 .table-container {
-    overflow-x: auto; /* Ensures table is scrollable on small screens */
+    overflow-x: auto;
     margin-bottom: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
@@ -545,25 +494,76 @@ footer {
 
 table {
     width: 100%;
-    border-collapse: collapse; /* Collapses borders into a single border */
-    margin: 1.5rem 0; /* Space above and below the table */
+    border-collapse: collapse;
+    margin: 1.5rem 0;
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--calico-black);
-    background-color: rgba(238, 235, 232, 0.8); /* --calico-cream at 80% opacity */
+    background-color: rgba(238, 235, 232, 0.8);
     border-radius: 8px;
-    overflow: hidden; /* Ensures rounded corners apply */
+    overflow: hidden;
 }
 
 table th,
 table td {
-    padding: 12px 15px; /* Padding inside cells */
-    text-align: left; /* Align text to the left */
-    border-bottom: 1px solid var(--calico-light-grey); /* Bottom border for rows */
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--calico-light-grey);
 }
 
 table th {
-    background-color: var(--calico-orange); /* Header background color */
+    background-color: var(--calico-orange);
+    color: var(--calico-black);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: rgba(238, 235, 232, 0.7);
+}
+
+table tbody tr:nth-child(even) {
+    background-color: rgba(238, 235, 232, 0.9);
+}
+
+table tbody tr:hover {
+    background-color: var(--calico-dark-orange);
+    color: var(--calico-white);
+}
+
+.page-content table {
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.7rem; }
+    .tagline { font-size: 1.1rem; }
+    nav ul { flex-direction: column; gap: 10px; margin-top: 1rem; }
+    nav ul li a { padding: 0.8rem 1.5rem; display: block; }
+    main { margin: 1.5rem auto; padding: 15px; }
+    .skills-grid, .project-grid { grid-template-columns: 1fr; }
+    .social-links { flex-direction: column; gap: 15px; }
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea { width: 100%; }
+    .page-content {
+        padding: 15px;
+    }
+    .essay-article, .pc-build-item {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .tagline { font-size: 1rem; }
+    .profile-pic { width: 120px; height: 120px; }
+    main { margin: 1rem auto; padding: 10px; }
+    header { padding: 1rem 0; }
+    .button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+}
     color: var(--calico-black);
     font-weight: bold;
     text-transform: uppercase;
