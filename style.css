@@ -520,57 +520,6 @@ table th {
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: rgba(238, 235, 232, 0.7);
-}
-
-table tbody tr:nth-child(even) {
-    background-color: rgba(238, 235, 232, 0.9);
-}
-
-table tbody tr:hover {
-    background-color: var(--calico-dark-orange);
-    color: var(--calico-white);
-}
-
-.page-content table {
-}
-
-@media (max-width: 768px) {
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 1.7rem; }
-    .tagline { font-size: 1.1rem; }
-    nav ul { flex-direction: column; gap: 10px; margin-top: 1rem; }
-    nav ul li a { padding: 0.8rem 1.5rem; display: block; }
-    main { margin: 1.5rem auto; padding: 15px; }
-    .skills-grid, .project-grid { grid-template-columns: 1fr; }
-    .social-links { flex-direction: column; gap: 15px; }
-    .contact-form input[type="text"],
-    .contact-form input[type="email"],
-    .contact-form textarea { width: 100%; }
-    .page-content {
-        padding: 15px;
-    }
-    .essay-article, .pc-build-item {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.5rem; }
-    .tagline { font-size: 1rem; }
-    .profile-pic { width: 120px; height: 120px; }
-    main { margin: 1rem auto; padding: 10px; }
-    header { padding: 1rem 0; }
-    .button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-}
-    color: var(--calico-black);
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-table tbody tr:nth-child(odd) {
     background-color: rgba(238, 235, 232, 0.7); /* Slightly lighter for odd rows */
 }
 
