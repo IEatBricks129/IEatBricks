@@ -1,5 +1,4 @@
 (function() {
-    // Apply darkmode class as early as possible to avoid flash of wrong background
     const savedTheme = localStorage.getItem('theme');
     let shouldDark = false;
     if (savedTheme === 'dark') {
@@ -20,7 +19,6 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Wingdings easter egg: 6 presses of "6" key in 6 seconds
     let sixPresses = [];
     document.addEventListener('keydown', (e) => {
         if (e.key === '6') {
@@ -42,10 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.body.classList.remove('darkmode');
         }
-        // Force repaint for background-image swap
         document.body.style.display = 'none';
-        // eslint-disable-next-line no-unused-expressions
-        document.body.offsetHeight; // force reflow
+        document.body.offsetHeight;
         document.body.style.display = '';
     }
 
@@ -57,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', mode);
     }
 
-    // Remove preload class after DOM is ready
     document.documentElement.classList.remove('darkmode-preload');
 
     const savedTheme = getPreferredTheme();
@@ -73,9 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.addEventListener('click', () => {
             const isDark = document.body.classList.toggle('darkmode');
             setPreferredTheme(isDark ? 'dark' : 'light');
-            // Force repaint for background-image swap
             document.body.style.display = 'none';
-            // eslint-disable-next-line no-unused-expressions
             document.body.offsetHeight;
             document.body.style.display = '';
         });

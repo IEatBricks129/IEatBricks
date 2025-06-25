@@ -595,11 +595,6 @@ table tbody tr:hover {
     header { padding: 1rem 0; }
     .button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
 }
-    .profile-pic { width: 120px; height: 120px; }
-    main { margin: 1rem auto; padding: 10px; }
-    header { padding: 1rem 0; }
-    .button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-}
 
 /* DARK MODE THEME */
 body.darkmode {
@@ -768,7 +763,6 @@ body.darkmode .intro-paragraph {
     color: #fff;
 }
 
-/* Toggle Button Styles */
 .theme-toggle {
     position: fixed;
     top: 24px;
@@ -845,6 +839,12 @@ body.darkmode .theme-toggle .icon.moon {
 body.darkmode .theme-toggle:hover {
     background: #e09e4a;
     border-color: #ffe082;
+}
+
+body.wingdings-mode, 
+body.wingdings-mode * {
+    font-family: 'Wingdings', 'Wingdings 2', 'Wingdings 3', 'Symbola', 'Segoe UI Symbol', 'Arial Unicode MS', cursive !important;
+}
 }
 
 body.wingdings-mode, 
