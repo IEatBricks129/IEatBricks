@@ -68,7 +68,7 @@
     const container = document.getElementById('screenshots-container');
 
     // Try to fetch directory listing and display all images automatically
-    fetch('../screenshots/')
+    fetch('../media/images/')
         .then(r => r.text())
         .then(html => {
             const parser = new DOMParser();
@@ -80,7 +80,7 @@
                 .map(href => {
                     // Remove leading slashes or folder names
                     let clean = href.replace(/^\/+/, '');
-                    if (clean.startsWith('screenshots/')) clean = clean.substring('screenshots/'.length);
+                    if (clean.startsWith('images/')) clean = clean.substring('images/'.length);
                     return clean;
                 });
             if (images.length === 0) {
@@ -88,7 +88,7 @@
             } else {
                 images.forEach(img => {
                     const el = document.createElement('img');
-                    el.src = '../screenshots/' + img;
+                    el.src = '../media/images/' + img;
                     el.alt = img;
                     container.appendChild(el);
                 });
