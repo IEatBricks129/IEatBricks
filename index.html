@@ -141,13 +141,7 @@
     </main>
     <script src="script.js"></script>
     <script>
-let sKeyHeld = false;
-document.addEventListener('keydown', function(e) {
-    if (e.key === 's' && !sKeyHeld) {
-        sKeyHeld = true;
-        window.location.href = 'pages/goofy_screenshots.html';
-    }
-});
+        
 document.addEventListener('keyup', function(e) {
     if (e.key === 's') {
         sKeyHeld = false;
