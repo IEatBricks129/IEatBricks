@@ -561,9 +561,6 @@ table tbody tr:hover {
     color: #fff;
 }
 
-.page-content table {
-}
-
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
     h2 { font-size: 1.7rem; }
