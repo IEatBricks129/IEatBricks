@@ -18,7 +18,9 @@
     }
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('partialsLoaded', initializePageElements);
+
+function initializePageElements() {
     let sixPresses = [];
     document.addEventListener('keydown', (e) => {
         if (e.key === '6') {
@@ -116,4 +118,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
+}
