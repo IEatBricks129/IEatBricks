@@ -879,6 +879,9 @@ body, body.darkmode {
     display: grid;
     gap: 20px;
 }
+.blog-list .blog-card {
+    will-change: transform, opacity;
+}
 .blog-card {
     padding: 18px;
     border-radius: 12px;

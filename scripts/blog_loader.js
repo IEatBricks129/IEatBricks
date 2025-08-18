@@ -4,15 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = { posts: [], activeTag: null };
 
     const render = () => {
-        listEl.innerHTML = '';
-        const filtered = state.activeTag ? state.posts.filter(p => (p.tags || []).includes(state.activeTag)) : state.posts;
-        if (filtered.length === 0) {
-            listEl.innerHTML = '<p>No posts found.</p>';
-            return;
+        // animate existing cards out
+        const existing = Array.from(listEl.children);
+        if (existing.length) {
+            existing.forEach((el, i) => {
+                el.style.transition = 'opacity 180ms ease, transform 220ms ease';
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(8px)';
+            });
         }
-        filtered.forEach(p => {
-            const card = document.createElement('article');
-            card.className = 'blog-card';
+
+        // after out animation, replace content
+        setTimeout(() => {
+            listEl.innerHTML = '';
+            const filtered = state.activeTag ? state.posts.filter(p => (p.tags || []).includes(state.activeTag)) : state.posts;
+            if (filtered.length === 0) {
+                listEl.innerHTML = '<p>No posts found.</p>';
+                return;
+            }
+            filtered.forEach((p, idx) => {
+                const card = document.createElement('article');
+                card.className = 'blog-card';
 
             const title = document.createElement('h3');
             const link = document.createElement('a');
@@ -53,8 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.appendChild(tagsWrap);
             }
 
-            listEl.appendChild(card);
+                listEl.appendChild(card);
+
+                // entrance animation (stagger)
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 260ms ease, transform 260ms cubic-bezier(.2,.9,.2,1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 60 + idx * 60);
         });
+        }, 220);
     };
 
     // tag bar

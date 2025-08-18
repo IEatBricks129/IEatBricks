@@ -130,25 +130,55 @@ function initializePageElements() {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            const targetHref = this.getAttribute('href');
             if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
             if (this.target === '_blank') return;
 
-            const isSamePageAnchor = targetHref && targetHref.startsWith('#') && this.pathname === window.location.pathname;
-            const isInternalLink = targetHref && this.origin === window.location.origin && !isSamePageAnchor;
+            const href = this.getAttribute('href') || '';
+            if (!href || href === '#') return; // nothing to do
+
+            let url;
+            try {
+                url = new URL(href, window.location.href);
+            } catch (err) {
+                return;
+            }
+
+            // consider / and /index.html equivalent for same-page checks
+            const normalizePath = (p) => p.replace(/\/index\.html$|\/$/, '/');
+            const samePath = normalizePath(url.pathname) === normalizePath(window.location.pathname);
+            const isSamePageAnchor = !!url.hash && samePath;
+            const isInternalLink = url.origin === window.location.origin && !isSamePageAnchor;
 
             if (isSamePageAnchor) {
                 e.preventDefault();
                 this.classList.add('is-animating');
                 this.addEventListener('animationend', () => {
                     this.classList.remove('is-animating');
-                    const targetId = targetHref.substring(1);
+                    const targetId = url.hash.substring(1);
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        // if element missing, safely navigate
+                        window.location.href = url.href;
                     }
                 }, { once: true });
             } else if (isInternalLink) {
+                // if the target URL equals current (including fragment), just handle anchor or ignore
+                if (url.href === window.location.href) {
+                    e.preventDefault();
+                    // try to scroll to hash if present
+                    if (url.hash) {
+                        const id = url.hash.substring(1);
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                            return;
+                        }
+                    }
+                    return;
+                }
+
                 e.preventDefault();
                 this.classList.add('is-animating');
                 this.addEventListener('animationend', () => {
@@ -156,7 +186,7 @@ function initializePageElements() {
                     document.body.classList.remove('js-ready');
                     document.body.classList.add('fade-out');
                     setTimeout(() => {
-                        window.location.href = targetHref;
+                        window.location.href = url.href;
                     }, 350);
                 }, { once: true });
             }
