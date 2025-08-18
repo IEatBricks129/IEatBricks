@@ -116,7 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    fetch('posts/index.json')
+    // resolve posts/index.json relative to current document path
+    const basePath = document.location.pathname.replace(/\/[^/]*$/, '/');
+    const postsIndexUrl = new URL('posts/index.json', document.location.origin + basePath).href;
+
+    fetch(postsIndexUrl)
         .then(r => r.json())
         .then(posts => {
             posts.sort((a,b) => (b.date || '').localeCompare(a.date || ''));
@@ -126,6 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => {
             console.error('Failed to load posts:', err);
-            listEl.innerHTML = '<p>Unable to load posts.</p>';
+            listEl.innerHTML = '<p>Unable to load posts. Please try again later.</p>';
         });
 });

@@ -1,12 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadPartial = async (placeholderId, partialPath) => {
         try {
-            const response = await fetch(partialPath);
+            // resolve partialPath relative to current document
+            const base = document.location.pathname.replace(/\/[^/]*$/, '/');
+            const url = new URL(partialPath, document.location.origin + base).href;
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const html = await response.text();
-            document.getElementById(placeholderId).innerHTML = html;
+            // use a template to avoid executing inline scripts unintentionally
+            const tpl = document.createElement('template');
+            tpl.innerHTML = html.trim();
+            const node = tpl.content.cloneNode(true);
+            const container = document.getElementById(placeholderId);
+            container.innerHTML = '';
+            container.appendChild(node);
         } catch (error) {
             console.error(`Could not load partial ${partialPath}:`, error);
         }

@@ -116,9 +116,85 @@ function initializePageElements() {
 
                 // remove button animation class slightly after
                 setTimeout(() => themeToggle.classList.remove('is-toggling-strong'), REVEAL_MS + 120);
+                // update persistent bg layers to match the new mode
+                try { updateThemeLayers(isDark ? 'dark' : 'light'); } catch (e) {}
             }, REVEAL_MS);
         });
     }
+
+        // --- Persistent background layers to preserve scroll/animation across PJAX swaps ---
+        // Create if missing: #bg-global for main page tile, #bg-header for header tile
+        function ensureBgLayers() {
+            if (!document.getElementById('bg-global')) {
+                const g = document.createElement('div');
+                g.id = 'bg-global';
+                g.className = 'bg-layer bg-global';
+                document.body.insertBefore(g, document.body.firstChild);
+            }
+            if (!document.getElementById('bg-header')) {
+                const h = document.createElement('div');
+                h.id = 'bg-header';
+                h.className = 'bg-layer bg-header';
+                // place header bg immediately after bg-global to sit behind header-content
+                const global = document.getElementById('bg-global');
+                if (global && global.nextSibling) document.body.insertBefore(h, global.nextSibling); else document.body.insertBefore(h, document.body.firstChild.nextSibling);
+            }
+        }
+
+        function applyBgForMode(mode) {
+            const global = document.getElementById('bg-global');
+            const header = document.getElementById('bg-header');
+            if (!global || !header) return;
+            // Use class toggles to avoid inline style mutations that can reset animations
+            if (mode === 'dark') {
+                global.classList.add('dark'); global.classList.remove('light');
+                header.classList.add('dark'); header.classList.remove('light');
+            } else {
+                global.classList.add('light'); global.classList.remove('dark');
+                header.classList.add('light'); header.classList.remove('dark');
+            }
+        }
+
+        // create layers now and apply according to current theme
+        ensureBgLayers();
+        applyBgForMode(document.body.classList.contains('darkmode') ? 'dark' : 'light');
+
+        // size header bg to match header-content height so it clips perfectly
+        function sizeHeaderBg() {
+            // target the centered container inside the header so the bg matches the site's content width
+            const headerEl = document.querySelector('.header-content') || document.querySelector('header');
+            const headerBg = document.getElementById('bg-header');
+            if (!headerEl || !headerBg) return;
+            const rect = headerEl.getBoundingClientRect();
+            // position header bg directly behind header
+            headerBg.style.top = rect.top + 'px';
+            headerBg.style.left = rect.left + 'px';
+            headerBg.style.width = rect.width + 'px';
+            headerBg.style.height = rect.height + 'px';
+            // copy border radius from the header-content to make the bg visually match
+            try {
+                const cs = getComputedStyle(headerEl);
+                headerBg.style.borderRadius = cs.borderTopLeftRadius || cs.borderRadius || '';
+            } catch (e) {
+                // ignore
+            }
+        }
+        sizeHeaderBg();
+        window.addEventListener('resize', () => {
+            sizeHeaderBg();
+        });
+        // update on scroll in case header position changes (sticky headers, small layout shifts)
+        window.addEventListener('scroll', () => {
+            sizeHeaderBg();
+        }, { passive: true });
+
+        // when theme changes via toggle, update the bg layers instead of body background
+        const originalSetPreferredTheme = window.__setPreferredTheme;
+        function updateThemeLayers(mode) {
+            applyBgForMode(mode);
+            // re-size header bg after theme changes (in case header layout shifts)
+            setTimeout(sizeHeaderBg, 50);
+        }
 
     document.body.classList.add('js-ready');
     document.body.classList.add('fade-init');
@@ -216,16 +292,30 @@ function initializePageElements() {
             const newMain = doc.querySelector('main');
             const newTitle = doc.querySelector('title') ? doc.querySelector('title').textContent : document.title;
 
-            // animate current main out quickly
-            mainEl.style.transition = 'opacity 220ms ease, transform 220ms ease';
-            mainEl.style.opacity = '0';
-            mainEl.style.transform = 'translateY(8px) scale(0.995)';
-
-            await new Promise(res => setTimeout(res, 220));
+            // animate current main out using class-based transitions
+            mainEl.classList.add('main-exit');
+            await new Promise(res => {
+                let done = false;
+                const onEnd = (e) => {
+                    if (e.target !== mainEl) return;
+                    if (done) return;
+                    done = true;
+                    mainEl.removeEventListener('transitionend', onEnd);
+                    res();
+                };
+                mainEl.addEventListener('transitionend', onEnd);
+                // fallback timeout
+                setTimeout(() => { if (!done) { done = true; mainEl.removeEventListener('transitionend', onEnd); res(); } }, 300);
+            });
 
             // replace content
             if (newMain) {
+                // ensure incoming content starts hidden to allow smooth enter animation
+                mainEl.classList.remove('main-exit');
+                mainEl.classList.add('main-enter');
                 mainEl.innerHTML = newMain.innerHTML;
+                // force reflow so the main-enter initial state is applied
+                void mainEl.offsetWidth;
             } else {
                 // fallback to full navigation
                 window.location.href = url.href;
@@ -241,13 +331,9 @@ function initializePageElements() {
             // re-run partial detection in case placeholders exist (but don't reload header/footer)
             document.dispatchEvent(new Event('partialsLoaded'));
 
-            // animate in
-            mainEl.style.opacity = '0';
-            mainEl.style.transform = 'translateY(12px)';
+            // animate in using class-based transitions
             requestAnimationFrame(() => {
-                mainEl.style.transition = 'opacity 320ms ease, transform 320ms cubic-bezier(.2,.9,.2,1)';
-                mainEl.style.opacity = '1';
-                mainEl.style.transform = 'translateY(0)';
+                mainEl.classList.remove('main-enter');
             });
 
             if (push) history.pushState({ url: url.href }, newTitle, url.href);
