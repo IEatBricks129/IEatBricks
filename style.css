@@ -869,6 +869,26 @@ body, body.darkmode {
     transition: background-image 0.35s ease-in-out, background-color 0.35s ease-in-out, color 0.3s ease;
 }
 
+/* PJAX overlay used during content swaps to mask background and reduce perceived jank */
+.pjax-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.0);
+    z-index: 9998;
+    pointer-events: none;
+    transition: background 260ms ease, opacity 260ms ease;
+}
+.pjax-overlay.active {
+    background: rgba(0,0,0,0.06);
+    opacity: 1;
+}
+
+/* Smooth main area transitions */
+main {
+    will-change: opacity, transform;
+    transition: opacity 260ms ease, transform 260ms cubic-bezier(.2,.9,.2,1);
+}
+
 /* Blog page basics */
 .blog-container {
     max-width: 900px;
