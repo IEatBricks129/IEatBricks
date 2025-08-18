@@ -67,12 +67,56 @@ function initializePageElements() {
 
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const isDark = document.body.classList.toggle('darkmode');
-            setPreferredTheme(isDark ? 'dark' : 'light');
-            document.body.style.display = 'none';
-            document.body.offsetHeight;
-            document.body.style.display = '';
+        themeToggle.addEventListener('click', (e) => {
+            // stronger button animation
+            themeToggle.classList.add('is-toggling-strong');
+
+            // create an overlay to perform a circular reveal centered on the toggle button
+            let overlay = document.getElementById('theme-switch-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'theme-switch-overlay';
+                overlay.className = 'theme-switch-overlay';
+                document.body.appendChild(overlay);
+            }
+
+            const rect = themeToggle.getBoundingClientRect();
+            // compute center relative to viewport for clip-path
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            overlay.style.setProperty('--clip-x', cx + 'px');
+            overlay.style.setProperty('--clip-y', cy + 'px');
+
+            const currentlyDark = document.body.classList.contains('darkmode');
+            const incomingMode = currentlyDark ? 'light' : 'dark';
+            overlay.dataset.mode = incomingMode;
+
+            // trigger expand animation
+            void overlay.offsetWidth;
+            overlay.classList.add('reveal');
+
+            const REVEAL_MS = 360;
+
+            setTimeout(() => {
+                const isDark = document.body.classList.toggle('darkmode');
+                setPreferredTheme(isDark ? 'dark' : 'light');
+
+                // tiny reflow trick
+                document.body.style.display = 'none';
+                document.body.offsetHeight;
+                document.body.style.display = '';
+
+                // collapse reveal and cleanup
+                overlay.classList.remove('reveal');
+                overlay.addEventListener('transitionend', function handler(e) {
+                    if (e.propertyName === 'clip-path' || e.propertyName === 'opacity') {
+                        overlay.remove();
+                    }
+                }, { once: true });
+
+                // remove button animation class slightly after
+                setTimeout(() => themeToggle.classList.remove('is-toggling-strong'), REVEAL_MS + 120);
+            }, REVEAL_MS);
         });
     }
 

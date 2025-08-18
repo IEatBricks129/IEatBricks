@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Test Post",
+    "date": "2025-08-18",
+    "excerpt": "A quick sample post to show how entries look.",
+    "path": "posts/testPost.html",
+    "tags": ["demo"]
+  },
+
+  {
+    "title": "Fist Post!",
+    "date": "2025-08-18",
+    "excerpt": "The first post on my extremely over engineered blog.",
+    "path": "posts/firstPost.html",
+    "tags": ["shitpost", "demo"]
+  }
+]
